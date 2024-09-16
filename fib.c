@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int fib_iterative(int num) {
+unsigned long long fib_iterative(unsigned long long num) {
     if (num <= 2) {
         return num - 1;
     }
 
-    int previous_num = 0;
-    int current_num = 1;
-    int next_num;
+    unsigned long long previous_num = 0;
+    unsigned long long current_num = 1;
+    unsigned long long next_num;
 
-    for (int iter = 3; iter <= num; iter++) {
+    for (unsigned long long iter = 3; iter <= num; iter++) {
         next_num = previous_num + current_num;
         previous_num = current_num;
         current_num = next_num;
@@ -19,21 +19,17 @@ int fib_iterative(int num) {
     return current_num;
 }
 
-int fib_recursive(int num) {
-    if (num <= 2) {
-        return num - 1;
-    }
-
-    return fib_recursive(num - 1) + fib_recursive(num - 2);
+unsigned long long fib_recursive(unsigned long long num) {
+    return (num <= 2) ? (num - 1) : (fib_recursive(num - 1) + fib_recursive(num - 2));
 }
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Usage: %s <input number> <fib method> <filename>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <integer> <method> <filename>\n", argv[0]);
         return 1;
     }
 
-    int input_number = atoi(argv[1]);
+    unsigned long long input_number = strtoull(argv[1], NULL, 10);
     char fib_method = argv[2][0];
     char *filename = argv[3];
 
@@ -43,12 +39,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int file_number;
-    fscanf(file, "%d", &file_number);
+    unsigned long long file_number;
+    fscanf(file, "%llu", &file_number);
     fclose(file);
 
-    int N = input_number + file_number;
-    int fib_result;
+    unsigned long long N = input_number + file_number;
+    unsigned long long fib_result;
 
     if (fib_method == 'i') {
         fib_result = fib_iterative(N);
@@ -59,6 +55,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("%d\n", fib_result);
+    printf("%llu\n", fib_result);
     return 0;
 }
